@@ -1,22 +1,22 @@
-# NBIM Dividend Ingestion & Reconciliation — README
+# NBIM Dividend Ingestion & Reconciliation Solution
 
 ## Overview
 
 This project ingests two dividend files (NBIM vs Custody), normalizes them to a **Common Event Schema (CES)**, aligns comparable events, and produces human‑readable QA outputs. It includes a Streamlit UI for analysts and a fully deterministic batch flow for reproducibility.
 
-Why deterministic? We ship two mapping modes—**Deterministic** and **Agent**—for mapping source headers to CES fields. Agentic mapping can be helpful on messy files but is non‑deterministic and may hallucinate. For the interview case and any production‑like run, we use **Deterministic mapping** to guarantee repeatable results.
+Why deterministic? We ship two mapping modes—**Deterministic** and **Agent** for mapping source headers to CES fields. Agentic mapping can be helpful on messy files but is non‑deterministic and may hallucinate. Although this is a case for a interview, we focused on safety and repeatable results.
 
 ---
 
 ## Key ideas
 
-* **Deterministic header mapping** (`map_headers.py`): regex/heuristic rules map raw CSV headers to CES paths. No LLM needed → fully reproducible.
+* **Deterministic header mapping** (`map_headers.py`): regex/heuristic rules map raw CSV headers to CES paths. No LLM needed. 
 * **Agent header mapping (optional)** (`header_mapper.py`): an Anthropic‑powered helper that *suggests* mappings for unknown columns using sampled values. Useful for exploration; disabled by default.
-* **Pre‑processing**: we tidy and normalize rows (dates, decimals, currencies) so downstream alignment—and even other agents—operate on a clean, structured format.
+* **Pre‑processing**: we tidy and normalize rows (dates, decimals, currencies) so downstream alignment and other agents can operate on strucured and cleaned data.
 * **Event Keying** (`event_key.py`): stable hash built from `(ISIN, ex_date, pay_date, quote_ccy)` if no vendor key is provided.
 * **Alignment & comparison** (`align_and_compare.py`): groups by `event_key`, aggregates amounts, computes deltas/flags.
 * **QA reporting** (`report_qa.py`): concise markdown summary of flags and largest discrepancies.
-* **LLM Explainer (optional)** (`explainer.py`): generates short natural‑language rationales for differences (FX, ADR fees, tax rate, etc.).
+* **LLM Explainer** (`explainer.py`): generates short natural‑language rationales for differences (FX, ADR fees, tax rate, etc.).
 
 ---
 
@@ -50,8 +50,6 @@ Why deterministic? We ship two mapping modes—**Deterministic** and **Agent**�
 ├─ README.md
 └─ requirements.txt
 ```
-
-> The `source/` and `out/` folders are part of the deliverable. Place the mapping JSONs in `source/`. The pipeline writes all outputs to `out/`.
 
 ---
 

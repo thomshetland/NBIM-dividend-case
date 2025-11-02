@@ -35,11 +35,6 @@ HEADER_MODEL = os.environ.get("HEADER_MODEL")
 # Explainer (LLM only)
 USE_LLM   = _to_bool(os.environ.get("USE_LLM", "true"))
 LLM_MODEL = os.environ.get("LLM_MODEL", "claude-3-5-haiku-20241022")
-# --- add near top (env flags) ---
-USE_REC_AGENT   = _to_bool(os.environ.get("REC_USE_AGENT", "true"))
-REC_AGENT_MODEL = os.environ.get("REC_AGENT_MODEL", "claude-3-5-haiku-20241022")  # kept for future LLM use
-REC_AGENT_DIR   = os.environ.get("REC_AGENT_OUT_DIR", None)  # default to OUT_DIR/agent if None
-
 
 # Header agent
 def _apply_header_overlay_runtime(accepted_map: dict):

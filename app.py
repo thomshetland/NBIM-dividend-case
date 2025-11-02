@@ -19,7 +19,7 @@ load_dotenv()
 
 # pipeline modules
 from src.transform import Transformer
-from src.align_and_compare import align_and_compare
+from src.align_and_compare import AlignerComparator
 from src.report_qa import report_qa
 import src.map_headers as MH
 
@@ -253,12 +253,12 @@ if run_btn:
     with st.spinner("Transforming & comparing…"):
         n_nb = Transformer("NBIM").transform(str(nbim_csv), str(nbim_events))
         n_cu = Transformer("CUSTODY").transform(str(cust_csv), str(custody_events))
-        n_cmp = align_and_compare(str(nbim_events), str(custody_events), str(compare_out))
+        n_cmp = AlignerComparator().run(str(nbim_events), str(custody_events), str(compare_out))
         report_qa(str(compare_out), str(qa_md))
 
     st.success(f"Pipeline done: NBIM rows={n_nb}, CUSTODY rows={n_cu}, comparison records={n_cmp}")
 
-    # ---- Explanations (LLM only)
+    # ---- Explanations 
     explanations_jsonl = out_dir / "explanations.jsonl"
     explanations_md = out_dir / "explanations.md"
     if use_llm and Explainer:
@@ -274,7 +274,11 @@ if run_btn:
 
     # ---- Summary & QA
     st.subheader("3) Summary & QA")
-    st.markdown(qa_md.read_text(encoding="utf-8")) if qa_md.exists() else st.info("No QA summary found.")
+    if qa_md.exists():
+        st.markdown(qa_md.read_text(encoding="utf-8"))
+    else:
+        st.info("No QA summary found.")
+
 
     # ---- Explanations
     st.subheader("4) Explanations")

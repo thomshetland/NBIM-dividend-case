@@ -6,7 +6,7 @@ import os, json
 import pandas as pd
 import anthropic
 
-from src.normalize import normalize_date, normalize_decimal, normalize_ccy, NormalizationError
+from src.normalize import Normalizer, NormalizationError
 from src.transform import Transformer
 from src.map_headers import map_headers
 
@@ -38,7 +38,9 @@ CES_TARGETS: Dict[str, str] = {
 }
 
 def _validate_values(values: List[Any], ces_type: str) -> float:
-    """Return pass rate [0..1] by running normalizers on a small sample (informational only)."""
+    """
+    Return pass rate [0..1] by running normalizers on a small sample (informational only).
+    """
     if not values:
         return 0.0
     ok = 0
@@ -47,11 +49,11 @@ def _validate_values(values: List[Any], ces_type: str) -> float:
         total += 1
         try:
             if ces_type == "date":
-                _ = normalize_date(v)
+                _ = Normalizer.normalize_date(v)
             elif ces_type == "number":
-                _ = normalize_decimal(v)
+                _ = Normalizer.normalize_decimal(v)
             elif ces_type == "ccy":
-                _ = normalize_ccy(v)
+                _ = Normalizer.normalize_ccy(v)
             elif ces_type == "string":
                 _ = str(v) if v is not None else ""
             else:
@@ -61,6 +63,7 @@ def _validate_values(values: List[Any], ces_type: str) -> float:
             pass
     return ok / max(total, 1)
 
+
 class HeaderMapper:
     """LLM-assisted header-mapping with file I/O baked in (replaces suggest_mappings + run)."""
 
@@ -68,10 +71,15 @@ class HeaderMapper:
                  accept_threshold_conf: float = 0.80):
         self.model = model
         self.accept_threshold_conf = float(accept_threshold_conf)
-        api_key = api_key or os.environ.get("ANTHROPIC_API_KEY")
-        if not api_key:
-            raise RuntimeError("Missing ANTHROPIC_API_KEY for header mapper.")
-        self.client = anthropic.Anthropic(api_key=api_key)
+
+        # Allow heuristics-only mode (no LLM) when model is None
+        if not model:
+            self.client = None
+        else:
+            api_key = api_key or os.environ.get("ANTHROPIC_API_KEY")
+            if not api_key:
+                raise RuntimeError("Missing ANTHROPIC_API_KEY for header mapper.")
+            self.client = anthropic.Anthropic(api_key=api_key)
 
         # Single tool schema
         self.tools: List[Dict[str, Any]] = [{
@@ -99,6 +107,7 @@ class HeaderMapper:
         if not self.model or not self.client:
             # Heuristics-only mode: no LLM → return empty candidate
             return {"header": header, "candidate": None, "confidence": 0.0, "reason": "no_llm"}
+
         user_msg = (
             f"HEADER: {header}\n"
             f"SAMPLE_VALUES: {json.dumps(values[:15], ensure_ascii=False)}\n"
@@ -148,7 +157,7 @@ class HeaderMapper:
             }
         return out
 
-    # api
+    # ---------- batch entry point ----------
     def run(self, nbim_csv: str | Path, custody_csv: str | Path, mapping_path: str | Path) -> Dict[str, Dict[str, Any]]:
         """Load CSVs, compute unmapped, call suggest_mappings, and write patch files."""
         nbim_csv, custody_csv, mapping_path = Path(nbim_csv), Path(custody_csv), Path(mapping_path)

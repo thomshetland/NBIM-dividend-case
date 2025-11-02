@@ -13,7 +13,6 @@ class Transformer:
     def __init__(self, source: SourceName):
         self.source = source
 
-    # ✅ Public: reuse from main/app for coverage/header-agent previews
     @staticmethod
     def robust_read_csv(path: str) -> pd.DataFrame:
         for sep in [",", ";", "\\t", "|"]:

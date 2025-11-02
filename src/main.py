@@ -11,9 +11,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from src.transform import Transformer
-from src.align_and_compare import align_and_compare
+from src.align_and_compare import AlignerComparator   # <-- use the class
 from src.report_qa import report_qa
-import pandas as pd  
+import pandas as pd
 
 
 def _to_bool(v, default=False):
@@ -22,17 +22,16 @@ def _to_bool(v, default=False):
     return str(v).strip().lower() in {"1", "true", "yes", "y", "on"}
 
 
-# paths from .env
-NBIM_CSV    = os.environ.get("NBIM_CSV")
-CUSTODY_CSV = os.environ.get("CUSTODY_CSV")
-OUT_DIR     = os.environ.get("OUT_DIR")
+# paths from .env (fallbacks so script still runs if unset)
+NBIM_CSV    = os.environ.get("NBIM_CSV", "data/NBIM_Dividend_Bookings.csv")
+CUSTODY_CSV = os.environ.get("CUSTODY_CSV", "data/CUSTODY_Dividend_Bookings.csv")
+OUT_DIR     = os.environ.get("OUT_DIR", "out")
 
-# mapping strategy:
-# deterministic | agent | hybrid
+# mapping strategy: deterministic | agent | hybrid
 MAPPING_STRATEGY = os.environ.get("MAPPING_STRATEGY", "deterministic").strip().lower()
 
-# model for header
-HEADER_MODEL = os.environ.get("HEADER_MODEL")  
+# header agent model (optional)
+HEADER_MODEL = os.environ.get("HEADER_MODEL")
 
 # Explainer (LLM only)
 USE_LLM   = _to_bool(os.environ.get("USE_LLM", "true"))
@@ -41,7 +40,7 @@ LLM_MODEL = os.environ.get("LLM_MODEL", "claude-3-5-haiku-20241022")
 
 # ---------- Header agent integration ----------
 def _apply_header_overlay_runtime(accepted_map: dict):
-    """Overlay accepted mappings at runtime (fills only unmapped after rules)."""
+    """Overlay accepted mappings after deterministic rules (fill gaps only)."""
     if not accepted_map:
         return
     import src.map_headers as MH
@@ -139,7 +138,9 @@ def main():
     # --- Transform → Compare → QA ---
     n_nb  = Transformer("NBIM").transform(NBIM_CSV, nbim_events)
     n_cu  = Transformer("CUSTODY").transform(CUSTODY_CSV, custody_events)
-    n_cmp = align_and_compare(nbim_events, custody_events, compare_out)
+
+    # NEW: use the class-based comparator
+    n_cmp = AlignerComparator().run(nbim_events, custody_events, compare_out)
 
     summary = {
         "outputs": {

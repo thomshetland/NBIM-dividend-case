@@ -146,7 +146,7 @@ streamlit run app.py
 ## Future Work
 
 * This solution builds upon the saying ''You are what you eat''. LLMs are rarely better than the training data it is trained on or fed during prompting. Therefore, we focused more on data structuring than actually automating the use case. However, AI Agents may be useful for this use case, but with the limited time, we focused on the data and implemented 2 small Agents to map and explain the data. 
-
+* Future work may include AI Agents to pre-process the CSV to natural language, classify what's important, or send email with the errors and differences. 
 
 
 

@@ -23,26 +23,32 @@ Why deterministic? We ship two mapping modes—**Deterministic** and **Agent**�
 ## Repository layout
 
 ```
-├─ app.py                      # Streamlit UI
-├─ main.py                     # Batch pipeline entrypoint
-├─ map_headers.py              # Deterministic header mapper
-├─ header_mapper.py            # Optional agentic header mapper (Anthropic)
-├─ transform.py / transform_common.py / normalize.py
-├─ align_and_compare.py        # Event alignment + delta computation
-├─ event_key.py                # Stable key builder
-├─ report_qa.py                # QA markdown summary
-├─ explainer.py                # Optional LLM explanations
-├─ requirements.txt
+├─ data/ # NBIM and Custody CSV files
+├─ out/ # All generated artifacts
+│ ├─ nbim.events.jsonl
+│ ├─ custody.events.jsonl
+│ ├─ comparison_frame.jsonl
+│ ├─ qa_summary.md
+│ ├─ explanations.jsonl 
+│ └─ explanations.md 
 ├─ source/
-│  ├─ nbim.mapping.json       # Deterministic mapping for NBIM input
-│  └─ custody.mapping.json    # Deterministic mapping for Custody input
-└─ out/                        # All generated artifacts
-   ├─ nbim.events.jsonl        # CES rows for NBIM
-   ├─ custody.events.jsonl     # CES rows for Custody
-   ├─ comparison_frame.jsonl   # Per‑event deltas + flags
-   ├─ qa_summary.md            # QA summary (counts + top deltas)
-   ├─ explanations.jsonl       # (optional) LLM per‑event explanations
-   └─ explanations.md          # (optional) human‑readable explanations
+│ ├─ nbim.mapping.json # Deterministic mapping for NBIM input
+│ └─ custody.mapping.json # Deterministic mapping for Custody input
+├─ src/
+│ ├─ agents/ # Mapper and Explainer Agent
+│ ├─ align_and_compare.py # Event alignment + delta computation
+│ ├─ event_key.py # Stable key builder
+│ ├─ main.py # Batch pipeline entrypoint
+│ ├─ map_headers.py # Deterministic header mapper
+│ ├─ normalize.py
+│ ├─ report_qa.py # QA markdown summary
+│ ├─ transform_common.py
+│ └─ transform.py
+├─ app.py # Streamlit UI
+├─ .env # API keys for agent/explainer and paths
+├─ .gitignore
+├─ README.md
+└─ requirements.txt
 ```
 
 > The `source/` and `out/` folders are part of the deliverable. Place the mapping JSONs in `source/`. The pipeline writes all outputs to `out/`.

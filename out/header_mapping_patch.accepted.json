@@ -1,0 +1,25 @@
+{
+  "accepted": {
+    "CUSTODY": "source.custodian",
+    "EVENT_EX_DATE": "dates.ex_date",
+    "EVENT_TYPE": "source.event_type",
+    "EXRESPRDIV_COST_QUOTATION": "source.event_type",
+    "EXRESPRDIV_COST_SETTLEMENT": "source.event_type",
+    "GROSS_AMOUNT_PORTFOLIO": "source.event_type",
+    "HOLDING_QUANTITY": "source.event_type",
+    "IS_CROSS_CURRENCY_REVERSAL": "source.event_type",
+    "LENDING_PERCENTAGE": "source.event_type",
+    "LOAN_QUANTITY": "source.event_type",
+    "LOCALTAX_COST_QUOTATION": "amounts_quote.tax",
+    "LOCALTAX_COST_SETTLEMENT": "amounts_settle.tax",
+    "NET_AMOUNT_PORTFOLIO": "source.event_type",
+    "NET_AMOUNT_SETTLEMENT": "amounts_settle.net",
+    "POSSIBLE_RESTITUTION_AMOUNT": "source.restitution.possible_amount",
+    "POSSIBLE_RESTITUTION_PAYMENT": "source.event_type",
+    "RESTITUTION_RATE": "source.restitution.rate",
+    "TOTAL_TAX_RATE": "rate.tax_rate",
+    "WTHTAX_COST_PORTFOLIO": "source.event_type",
+    "WTHTAX_COST_QUOTATION": "amounts_quote.tax",
+    "WTHTAX_COST_SETTLEMENT": "amounts_settle.tax"
+  }
+}

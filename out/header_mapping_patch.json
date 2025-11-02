@@ -1,0 +1,172 @@
+{
+  "suggestions": {
+    "CUSTODY": {
+      "candidate": "source.custodian",
+      "confidence": 0.95,
+      "pass_rate": 1.0,
+      "final_score": 0.975,
+      "accepted": true,
+      "reason": "heuristic+validation pass_rate=1.00"
+    },
+    "EVENT_EX_DATE": {
+      "candidate": "dates.ex_date",
+      "confidence": 0.95,
+      "pass_rate": 1.0,
+      "final_score": 0.975,
+      "accepted": true,
+      "reason": "heuristic+validation pass_rate=1.00"
+    },
+    "EVENT_TYPE": {
+      "candidate": "source.event_type",
+      "confidence": 0.95,
+      "pass_rate": 1.0,
+      "final_score": 0.975,
+      "accepted": true,
+      "reason": "heuristic+validation pass_rate=1.00"
+    },
+    "EXRESPRDIV_COST_QUOTATION": {
+      "candidate": "source.event_type",
+      "confidence": 0.95,
+      "pass_rate": 1.0,
+      "final_score": 0.975,
+      "accepted": true,
+      "reason": "heuristic+validation pass_rate=1.00"
+    },
+    "EXRESPRDIV_COST_SETTLEMENT": {
+      "candidate": "source.event_type",
+      "confidence": 0.95,
+      "pass_rate": 1.0,
+      "final_score": 0.975,
+      "accepted": true,
+      "reason": "heuristic+validation pass_rate=1.00"
+    },
+    "GROSS_AMOUNT_PORTFOLIO": {
+      "candidate": "source.event_type",
+      "confidence": 0.95,
+      "pass_rate": 1.0,
+      "final_score": 0.975,
+      "accepted": true,
+      "reason": "heuristic+validation pass_rate=1.00"
+    },
+    "HOLDING_QUANTITY": {
+      "candidate": "source.event_type",
+      "confidence": 0.95,
+      "pass_rate": 1.0,
+      "final_score": 0.975,
+      "accepted": true,
+      "reason": "heuristic+validation pass_rate=1.00"
+    },
+    "IS_CROSS_CURRENCY_REVERSAL": {
+      "candidate": "source.event_type",
+      "confidence": 0.95,
+      "pass_rate": 1.0,
+      "final_score": 0.975,
+      "accepted": true,
+      "reason": "heuristic+validation pass_rate=1.00"
+    },
+    "LENDING_PERCENTAGE": {
+      "candidate": "source.event_type",
+      "confidence": 0.95,
+      "pass_rate": 1.0,
+      "final_score": 0.975,
+      "accepted": true,
+      "reason": "heuristic+validation pass_rate=1.00"
+    },
+    "LOAN_QUANTITY": {
+      "candidate": "source.event_type",
+      "confidence": 0.95,
+      "pass_rate": 1.0,
+      "final_score": 0.975,
+      "accepted": true,
+      "reason": "heuristic+validation pass_rate=1.00"
+    },
+    "LOCALTAX_COST_QUOTATION": {
+      "candidate": "amounts_quote.tax",
+      "confidence": 0.95,
+      "pass_rate": 1.0,
+      "final_score": 0.975,
+      "accepted": true,
+      "reason": "heuristic+validation pass_rate=1.00"
+    },
+    "LOCALTAX_COST_SETTLEMENT": {
+      "candidate": "amounts_settle.tax",
+      "confidence": 0.95,
+      "pass_rate": 1.0,
+      "final_score": 0.975,
+      "accepted": true,
+      "reason": "heuristic+validation pass_rate=1.00"
+    },
+    "NET_AMOUNT_PORTFOLIO": {
+      "candidate": "source.event_type",
+      "confidence": 0.95,
+      "pass_rate": 1.0,
+      "final_score": 0.975,
+      "accepted": true,
+      "reason": "heuristic+validation pass_rate=1.00"
+    },
+    "NET_AMOUNT_SETTLEMENT": {
+      "candidate": "amounts_settle.net",
+      "confidence": 0.95,
+      "pass_rate": 1.0,
+      "final_score": 0.975,
+      "accepted": true,
+      "reason": "heuristic+validation pass_rate=1.00"
+    },
+    "POSSIBLE_RESTITUTION_AMOUNT": {
+      "candidate": "source.restitution.possible_amount",
+      "confidence": 0.95,
+      "pass_rate": 1.0,
+      "final_score": 0.975,
+      "accepted": true,
+      "reason": "heuristic+validation pass_rate=1.00"
+    },
+    "POSSIBLE_RESTITUTION_PAYMENT": {
+      "candidate": "source.event_type",
+      "confidence": 0.95,
+      "pass_rate": 1.0,
+      "final_score": 0.975,
+      "accepted": true,
+      "reason": "heuristic+validation pass_rate=1.00"
+    },
+    "RESTITUTION_RATE": {
+      "candidate": "source.restitution.rate",
+      "confidence": 0.95,
+      "pass_rate": 1.0,
+      "final_score": 0.975,
+      "accepted": true,
+      "reason": "heuristic+validation pass_rate=1.00"
+    },
+    "TOTAL_TAX_RATE": {
+      "candidate": "rate.tax_rate",
+      "confidence": 0.95,
+      "pass_rate": 1.0,
+      "final_score": 0.975,
+      "accepted": true,
+      "reason": "heuristic+validation pass_rate=1.00"
+    },
+    "WTHTAX_COST_PORTFOLIO": {
+      "candidate": "source.event_type",
+      "confidence": 0.95,
+      "pass_rate": 1.0,
+      "final_score": 0.975,
+      "accepted": true,
+      "reason": "heuristic+validation pass_rate=1.00"
+    },
+    "WTHTAX_COST_QUOTATION": {
+      "candidate": "amounts_quote.tax",
+      "confidence": 0.95,
+      "pass_rate": 1.0,
+      "final_score": 0.975,
+      "accepted": true,
+      "reason": "heuristic+validation pass_rate=1.00"
+    },
+    "WTHTAX_COST_SETTLEMENT": {
+      "candidate": "amounts_settle.tax",
+      "confidence": 0.95,
+      "pass_rate": 1.0,
+      "final_score": 0.975,
+      "accepted": true,
+      "reason": "heuristic+validation pass_rate=1.00"
+    }
+  }
+}

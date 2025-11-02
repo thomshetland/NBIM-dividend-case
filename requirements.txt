@@ -1,0 +1,12 @@
+langchain
+langgraph
+langchain-anthropic
+anthropic
+pandas
+pyarrow
+python-dotenv
+pydantic
+rich
+PyYAML
+streamlit
+pandas

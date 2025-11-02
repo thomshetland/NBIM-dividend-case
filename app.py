@@ -101,7 +101,7 @@ def _nested_get(d: dict, path: str):
 
 # UI 
 st.set_page_config(page_title="Agentic Dividend Reconciliation System", layout="wide")
-st.title("⚡ Dividend Ingestion — Live App")
+st.title("Agentic Dividend Reconciliation System")
 
 with st.sidebar:
     st.header("Run Settings")

@@ -17,7 +17,6 @@ sys.path.append("src")
 from dotenv import load_dotenv
 load_dotenv()
 
-# pipeline modules
 from src.transform import Transformer
 from src.align_and_compare import AlignerComparator
 from src.report_qa import report_qa
@@ -258,7 +257,7 @@ if run_btn:
 
     st.success(f"Pipeline done: NBIM rows={n_nb}, CUSTODY rows={n_cu}, comparison records={n_cmp}")
 
-    # ---- Explanations 
+    # Explanations 
     explanations_jsonl = out_dir / "explanations.jsonl"
     explanations_md = out_dir / "explanations.md"
     if use_llm and Explainer:
@@ -272,7 +271,7 @@ if run_btn:
     elif use_llm and not Explainer:
         st.warning("Explainer module not available (src/agents/run_explain.py).")
 
-    # ---- Summary & QA
+    # Summary & QA
     st.subheader("3) Summary & QA")
     if qa_md.exists():
         st.markdown(qa_md.read_text(encoding="utf-8"))
@@ -280,7 +279,7 @@ if run_btn:
         st.info("No QA summary found.")
 
 
-    # ---- Explanations
+    # Explanations
     st.subheader("4) Explanations")
     if explanations_jsonl.exists():
         rows = _load_jsonl(explanations_jsonl)
@@ -301,7 +300,7 @@ if run_btn:
     else:
         st.info("No explanations generated (or explainer disabled).")
 
-    # ---- Comparison browser
+    # Comparison browser
     st.subheader("5) Comparison Browser")
     cmp_rows = _load_jsonl(compare_out)
     if not cmp_rows:
@@ -343,7 +342,7 @@ if run_btn:
             rec = next((r for r in cmp_rows if r.get("event_key") == ek), None)
             st.json(rec) if rec else st.warning("event_key not found.")
 
-    # ---- Downloads
+    # Downloads
     st.subheader("6) Artifacts")
     files = [
         ("NBIM events (JSONL)", nbim_events),

@@ -10,7 +10,7 @@ Number = Optional[float]
 class AlignerComparator:
     """Load NBIM/Custody JSONL events, aggregate by event_key, and emit deltas + flags."""
 
-    # --------- stateless helpers (kept @staticmethod for easy testing) ---------
+    # stateless helpers 
     @staticmethod
     def _safe_sum(values: List[Number]) -> Number:
         if not values:
@@ -152,7 +152,7 @@ class AlignerComparator:
         return count
 
 
-# --------- Backwards-compatible functional API ---------
+# api
 def align_and_compare(nbim_events_path: str, custody_events_path: str, out_path: str) -> int:
     """
     Back-compat wrapper so callers don't have to change.

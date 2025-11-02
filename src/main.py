@@ -3,7 +3,6 @@ import os
 import json
 import sys
 
-# Optional if you run from repo root
 sys.path.append(".")
 sys.path.append("src")
 
@@ -38,7 +37,7 @@ USE_LLM   = _to_bool(os.environ.get("USE_LLM", "true"))
 LLM_MODEL = os.environ.get("LLM_MODEL", "claude-3-5-haiku-20241022")
 
 
-# ---------- Header agent integration ----------
+# Header agent
 def _apply_header_overlay_runtime(accepted_map: dict):
     """Overlay accepted mappings after deterministic rules (fill gaps only)."""
     if not accepted_map:
@@ -82,7 +81,7 @@ def _run_header_mapper() -> dict:
     return accepted_map
 
 
-# ---------- Coverage reporting ----------
+# coverage reporting
 def _mapping_coverage(df: pd.DataFrame):
     from src.map_headers import map_headers, coverage
     colmap = map_headers(list(df.columns))

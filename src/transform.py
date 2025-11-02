@@ -43,7 +43,6 @@ class Transformer:
                 count += 1
         return count
 
-    # hooks …
     def preprocess_df(self, df: pd.DataFrame) -> pd.DataFrame: return df
     def preprocess_row(self, row: Dict[str, Any]) -> Dict[str, Any]: return row
     def postprocess_ces(self, ces: Dict[str, Any], row: Dict[str, Any]) -> Dict[str, Any]: return ces

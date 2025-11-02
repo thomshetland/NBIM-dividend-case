@@ -62,7 +62,7 @@ class Normalizer:
             dt = datetime.strptime(s, "%Y%m%d")
             return dt.strftime("%Y-%m-%d")
 
-    # ------------------- DECIMAL -------------------
+    # decimal
     @staticmethod
     def normalize_decimal(value) -> Optional[Decimal]:
         """
@@ -93,7 +93,7 @@ class Normalizer:
         return Decimal(s)
 
 
-    # ------------------- CURRENCY -------------------
+    # currency
     @staticmethod
     def normalize_ccy(value: Optional[str]) -> Optional[str]:
         """
@@ -110,7 +110,7 @@ class Normalizer:
         m = re.search(r"[A-Z]{3}", s)
         return m.group(0) if m else None
 
-    # ----------------- SAFE DERIVATIONS -----------------
+    # safe derivations
     @staticmethod
     def derive_missing_tax(
         gross: Optional[Decimal],
@@ -140,8 +140,7 @@ class Normalizer:
         if fx is None and quote_ccy and settle_ccy and quote_ccy == settle_ccy:
             return (Decimal("1.0"), "default: fx=1.0 (same ccy)")
         return (fx, "")
-
-    # ------------------- internals -------------------
+    
     @staticmethod
     def _strip(s):
         return s.strip() if isinstance(s, str) else s

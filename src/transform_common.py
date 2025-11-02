@@ -45,7 +45,7 @@ def row_to_ces(
         },
     }
 
-    # ---- 1) Deterministic field mapping + normalization ----
+    # Deterministic field mapping + normalization 
     for orig_col, ces_path in colmap.items():
         if not ces_path:
             continue
@@ -76,7 +76,6 @@ def row_to_ces(
 
         put(ces, ces_path, val)
 
-    # ---- 2) Safe derivations (using Normalizer helpers) ----
     # Derive amounts_quote.tax if missing and we have gross/net
     g = ces.get("amounts_quote", {}).get("gross")
     n = ces.get("amounts_quote", {}).get("net")
@@ -105,7 +104,7 @@ def row_to_ces(
         if fx_note:
             prov["fx.quote_to_portfolio_fx"] = fx_note
 
-    # ---- 3) Stable event_key (prefer vendor key if present) ----
+    # Stable event_key 
     vendor = ces.get("source", {}).get("vendor_event_key")
     if vendor and str(vendor).strip():
         ces["event_key"] = str(vendor).strip()
@@ -116,7 +115,7 @@ def row_to_ces(
         quote = ces.get("currencies", {}).get("quote_ccy")
         ces["event_key"] = build_event_key(isin, exd, pay, quote)
 
-    # ---- 4) Attach provenance notes (flat; easy to audit) ----
+    # Attach provenance notes 
     ces["source"]["provenance_notes"] = "; ".join(f"{k}:{v}" for k, v in prov.items())
 
     return ces, prov

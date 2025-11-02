@@ -79,11 +79,17 @@ source .venv/bin/activate   # Windows: .venv\\Scripts\\activate
 pip install -r requirements.txt
 ```
 
-Optional (only if you’ll use agent/explanations): create a `.env` with your Anthropic key.
+ Create a `.env` with your Anthropic key and other configurations.
 
 ```
+NBIM_CSV=data/NBIM_Dividend_Bookings.csv
+CUSTODY_CSV=data/CUSTODY_Dividend_Bookings.csv
+OUT_DIR=out
 ANTHROPIC_API_KEY=sk-ant-...
 LLM_MODEL=claude-3-5-haiku-20241022
+MAPPING_STRATEGY=deterministic # or agent
+USE_LLM=true
+HEADER_MODEL=claude-3-5-haiku-20241022
 ```
 
 ### 2) Provide deterministic mappings
@@ -100,12 +106,7 @@ Each file is a JSON object `{ "<raw header>": "<ces.path>" }`. Any header missin
 ### 3) Run the batch pipeline
 
 ```bash
-python main.py \
-  --nbim /path/to/NBIM_dividends.csv \
-  --custody /path/to/Custody_dividends.csv \
-  --out out \
-  --mapping deterministic \
-  [--with-explainer]   # optional, requires Anthropic key
+python src/main.py
 ```
 
 **Outputs** land in `out/` as listed above. See `qa_summary.md` for a one‑page view of quality flags and biggest deltas.
@@ -142,22 +143,10 @@ streamlit run app.py
 
 ---
 
-## Extending the system
+## Future Work
 
-* Add new regex rules in `map_headers.py`
-* Add/override per‑source mappings in `source/*.mapping.json`
-* Customize derivations in `normalize.py` (e.g., default FX=1.0 when quote=settle)
-* Expand CES or comparison logic in `transform_common.py` / `align_and_compare.py`
+* This solution builds upon the saying ''You are what you eat''. LLMs are rarely better than the training data it is trained on or fed during prompting. Therefore, we focused more on data structuring than actually automating the use case. However, AI Agents may be useful for this use case, but with the limited time, we focused on the data and implemented 2 small Agents to map and explain the data. 
 
----
 
-## Troubleshooting
-
-* *A header isn’t mapped*: add it to `source/*mapping.json` or extend `map_headers.py`
-* *Decimals look wrong*: input may use commas; normalization handles it—verify `normalize_decimal`
-* *Missing outputs*: ensure `--out out` is writable and files are not empty
-* *LLM features skipped*: set `ANTHROPIC_API_KEY` and `LLM_MODEL` in `.env`
-
----
 
 
